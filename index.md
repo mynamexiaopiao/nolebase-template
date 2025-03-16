@@ -15,7 +15,7 @@ hero:
   actions:
     - theme: brand
       text: 开始阅读
-      link: /笔记/index
+      link: /neoforge/index
     - theme: alt
       text: 作者的b站
       link: https://space.bilibili.com/666424559
