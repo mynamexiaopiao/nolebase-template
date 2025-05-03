@@ -374,34 +374,6 @@ private 目标类型 自定义方法名(构造方法参数) {
 #### `@ModifyArg`​
 
 ```java
-@Redirect(method = "targetMethod", at = @At(value = "INVOKE", target = "Lnet/minecraft/...;originalMethod()V"))
-private void redirectMethod() {
-    // 替换原方法调用
-}
-```
-
-* 完全重定向方法调用或字段访问
-* 必须返回与原方法兼容的类型
-
-`@Redirect`​
-
-|shift可选位置偏移|作用（|
-| -------------------| ------------------|
-|​`NONE`​|不移动|
-|​`BEFORE`​|向后移动一条指令|
-|​`AFTER`​|向前移动一条指令|
-|​`BY`​|将返回的作码移动|
-
-|Shift可选位置偏移|作用|
-| -------------------| ---------------------|
-|​`NONE`​|不移动|
-|​`BEFORE`​|向后移动一条指令|
-|​`AFTER`​|向前移动一条指令|
-|​`BY`​|将返回的作码移动 by|
-
-‍
-
-```java
 @ModifyArg(method = "targetMethod", at = @At(value = "INVOKE", target = "Lnet/minecraft/...;someMethod(I)V"), index = 0)
 private int modifyArg(int original) {
     return original + 1; // 修改参数值
