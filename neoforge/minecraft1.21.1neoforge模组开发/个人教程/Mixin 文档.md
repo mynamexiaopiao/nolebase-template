@@ -424,7 +424,7 @@ private void modifyArgs(Args args) {
 
 上面介绍了`@ModifyArg`​，当你需要修改方法中多个参数时，你就需要`@ModifyArgs`​，它可以一次性操作多个参数，我们方法会有`args`​参数，通过它的`.set`​来修改，因此它没有`index`​参数
 
-#### `@ModifyVariable`​
+#### `@ModifyVariable`
 
 ```java
 @ModifyVariable(method = "targetMethod", at = @At("STORE"), ordinal = 0)
@@ -434,19 +434,14 @@ private int modifyLocalVariable(int original) {
 ```
 
 * 修改局部变量
-* ​`ordinal`​ 指定变量的序号（同名变量时）
+* `ordinal` 指定变量的序号（变量赋值操作）
 
-这个注解是用来捕获并修改方法局部变量的，其中`ordinal`​表示同名变量的出现序号（从0开始），这可能不好理解，下面举个例子
+这个注解是用来捕获并修改方法局部变量的，其中`ordinal`表示**对同一变量的第N次赋值**（从0开始），这可能不好理解，下面举个例子，但是如果有多个不同名变量，则需要`@At(value = "STORE", target = "")`这个参数来指定变量名
 
 ```java
 public void attack(Entity target) {
-    float damage = getBaseDamage(); // <- 第一个damage（ordinal=0）
-    damage += getEnchantBonus();    // 修改值后重新存储
-    
-    if (isCritical()) {
-        float damage = damage * 1.5f; // <- 第二个damage（ordinal=1）
-        showCriticalParticles();
-    }
+    float damage = getDamage(); // 第一次赋值 → ordinal=0
+    damage += 10;              // 第二次赋值 → ordinal=1
     target.hurt(damage);
 }
 ```
@@ -482,8 +477,7 @@ float exhaustion = amount * 0.3f;
 this.foodData.addExhaustion(exhaustion);
 ```
 
-这其实和@Injec+locals的效果一样，但是如果有多个不同名变量，则需要@At(value = "STORE", target = "")这个参数来指定变量名
-
+这其实和@Inject+locals的效果一样
 #### ​`@ModifyConstant`​
 
 ```java
