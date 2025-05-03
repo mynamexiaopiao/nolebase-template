@@ -482,7 +482,7 @@ float exhaustion = amount * 0.3f;
 this.foodData.addExhaustion(exhaustion);
 ```
 
-这其实和@Injec+locals的效果一样
+这其实和@Injec+locals的效果一样，但是如果有多个不同名变量，则需要@At(value = "STORE", target = "")这个参数来指定变量名
 
 #### ​`@ModifyConstant`​
 
